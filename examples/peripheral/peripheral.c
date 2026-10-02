@@ -10,6 +10,7 @@
 #include "utility.h"
 #include "parser.h"
 
+#define TAG "Main"
 #define IAS_SERVICE_UUID "00001802-0000-1000-8000-00805f9b34fb"
 #define ALERT_LEVEL_CHAR_UUID "00002a06-0000-1000-8000-00805f9b34fb"
 #define CUD_CHAR "00002901-0000-1000-8000-00805f9b34fb"
@@ -20,7 +21,12 @@ Advertisement *advertisement = NULL;
 Application *app = NULL;
 Agent *agent = NULL;
 
-
+static void cleanup_handler(int signo) {
+    if (signo == SIGINT) {
+        log_error(TAG, "received SIGINT");
+        callback(loop);
+    }
+}
 
 gboolean on_request_authorization(Device *device) {
     log_debug(TAG, "requesting authorization for '%s", binc_device_get_name(device));
@@ -49,6 +55,10 @@ void on_central_state_changed(Adapter *adapter, Device *device) {
     }
 }
 
+void on_powered_state_changed(Adapter *adapter, gboolean state) {
+    log_debug(TAG, "powered '%s' (%s)", state ? "on" : "off", binc_adapter_get_path(adapter));
+}
+
 const char *on_local_char_read(const Application *application, const char *address, const char *service_uuid,
                         const char *char_uuid, const guint16 mtu, const guint16 offset) {
     return BLUEZ_ERROR_REJECTED;
@@ -64,7 +74,33 @@ const char *on_local_char_write(const Application *application, const char *addr
     return NULL;
 }
 
-int send_email(string value){
+gboolean callback(gpointer data) {
+    if (agent != NULL) {
+        binc_agent_free(agent);
+        agent = NULL;
+    }
+
+    if (app != NULL) {
+        binc_adapter_unregister_application(default_adapter, app);
+        binc_application_free(app);
+        app = NULL;
+    }
+
+    if (advertisement != NULL) {
+        binc_adapter_stop_advertising(default_adapter, advertisement);
+        binc_advertisement_free(advertisement);
+    }
+
+    if (default_adapter != NULL) {
+        binc_adapter_free(default_adapter);
+        default_adapter = NULL;
+    }
+
+    g_main_loop_quit((GMainLoop *) data);
+    return FALSE;
+}
+
+void send_email(){
     log_debug(TAG, "Simulating the actuator part.... ");
 }
 
