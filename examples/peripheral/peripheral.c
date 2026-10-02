@@ -21,13 +21,6 @@ Advertisement *advertisement = NULL;
 Application *app = NULL;
 Agent *agent = NULL;
 
-static void cleanup_handler(int signo) {
-    if (signo == SIGINT) {
-        log_error(TAG, "received SIGINT");
-        callback(loop);
-    }
-}
-
 gboolean on_request_authorization(Device *device) {
     log_debug(TAG, "requesting authorization for '%s", binc_device_get_name(device));
     return TRUE;
@@ -67,7 +60,7 @@ const char *on_local_char_read(const Application *application, const char *addre
 const char *on_local_char_write(const Application *application, const char *address, const char *service_uuid,
                           const char *char_uuid, GByteArray *byteArray, const guint16 mtu, const guint16 offset) {
     GString *result = g_byte_array_as_hex(byteArray);
-    send_email(result->str);
+    send_email();
     log_debug(TAG, "write request characteristic <%s> with value <%s>", char_uuid, result->str);
     g_string_free(result, TRUE);
 
@@ -102,6 +95,13 @@ gboolean callback(gpointer data) {
 
 void send_email(){
     log_debug(TAG, "Simulating the actuator part.... ");
+}
+
+static void cleanup_handler(int signo) {
+    if (signo == SIGINT) {
+        log_error(TAG, "received SIGINT");
+        callback(loop);
+    }
 }
 
 int main(void) {
