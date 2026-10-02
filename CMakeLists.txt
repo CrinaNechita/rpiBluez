@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(bluez_inc C)
+project(rpi_bluez C)
 
 set(CMAKE_C_STANDARD 99)
 
