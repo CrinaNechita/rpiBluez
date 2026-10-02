@@ -57,6 +57,10 @@ const char *on_local_char_read(const Application *application, const char *addre
     return BLUEZ_ERROR_REJECTED;
 }
 
+void send_email(){
+    log_debug(TAG, "Simulating the actuator part.... ");
+}
+
 const char *on_local_char_write(const Application *application, const char *address, const char *service_uuid,
                           const char *char_uuid, GByteArray *byteArray, const guint16 mtu, const guint16 offset) {
     GString *result = g_byte_array_as_hex(byteArray);
@@ -91,10 +95,6 @@ gboolean callback(gpointer data) {
 
     g_main_loop_quit((GMainLoop *) data);
     return FALSE;
-}
-
-void send_email(){
-    log_debug(TAG, "Simulating the actuator part.... ");
 }
 
 static void cleanup_handler(int signo) {
