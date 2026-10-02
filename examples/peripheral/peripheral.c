@@ -57,14 +57,10 @@ const char *on_local_char_read(const Application *application, const char *addre
     return BLUEZ_ERROR_REJECTED;
 }
 
-void send_email(){
-    log_debug(TAG, "Simulating the actuator part.... ");
-}
-
 const char *on_local_char_write(const Application *application, const char *address, const char *service_uuid,
                           const char *char_uuid, GByteArray *byteArray, const guint16 mtu, const guint16 offset) {
     GString *result = g_byte_array_as_hex(byteArray);
-    send_email();
+    log_debug(TAG, "Simulating the actuator part.... ");
     log_debug(TAG, "write request characteristic <%s> with value <%s>", char_uuid, result->str);
     g_string_free(result, TRUE);
 
