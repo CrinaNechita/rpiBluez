@@ -1,6 +1,14 @@
 #include <glib.h>
 #include <stdio.h>
 #include <signal.h>
+#include "adapter.h"
+#include "device.h"
+#include "logger.h"
+#include "agent.h"
+#include "application.h"
+#include "advertisement.h"
+#include "utility.h"
+#include "parser.h"
 
 #define IAS_SERVICE_UUID "00001802-0000-1000-8000-00805f9b34fb"
 #define ALERT_LEVEL_CHAR_UUID "00002a06-0000-1000-8000-00805f9b34fb"
