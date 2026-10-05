@@ -9,6 +9,7 @@
 #include "advertisement.h"
 #include "utility.h"
 #include "parser.h"
+#include "announce.h"
 
 #define TAG "Main"
 #define IAS_SERVICE_UUID "00001802-0000-1000-8000-00805f9b34fb"
@@ -60,7 +61,8 @@ const char *on_local_char_read(const Application *application, const char *addre
 const char *on_local_char_write(const Application *application, const char *address, const char *service_uuid,
                           const char *char_uuid, GByteArray *byteArray, const guint16 mtu, const guint16 offset) {
     GString *result = g_byte_array_as_hex(byteArray);
-    log_debug(TAG, "Simulating the actuator part.... ");
+    log_debug(TAG, "Starting the actuator part.... ");
+    start_actuator();
     log_debug(TAG, "write request characteristic <%s> with value <%s>", char_uuid, result->str);
     g_string_free(result, TRUE);
 
@@ -117,6 +119,7 @@ int main(void) {
         binc_adapter_set_powered_state_cb(default_adapter, &on_powered_state_changed);
         if (!binc_adapter_get_powered_state(default_adapter)) {
             binc_adapter_power_on(default_adapter);
+            log_debug(TAG, "adapter wasnt powered on");
         }
 
         // Register an agent and set callbacks
@@ -161,7 +164,6 @@ int main(void) {
 
         binc_application_set_char_read_cb(app, &on_local_char_read);
         binc_application_set_char_write_cb(app, &on_local_char_write);
-        //?binc_application_set_char_updated_cb(app, &on_local_char_updated);
         binc_adapter_register_application(default_adapter, app);
     } else {
         log_debug("MAIN", "No default_adapter found");

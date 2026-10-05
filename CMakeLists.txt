@@ -16,6 +16,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -Wno-unused-function -
 include(FindPkgConfig)
 pkg_check_modules(GLIB glib-2.0 gio-2.0 REQUIRED)
 include_directories(${GLIB_INCLUDE_DIRS})
+include_directories(${WIRINGPi_INCLUDES})
 
 add_subdirectory(binc)
 add_subdirectory(examples/peripheral)
