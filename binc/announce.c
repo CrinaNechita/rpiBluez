@@ -3,7 +3,7 @@
 #include <wiringPi.h> 
 
 static const char *const TAG = "Announce";
-const int i, leds[4] = {17,27,22,23}; //DO NOT forget the resistors
+const int leds[4] = {17,27,22,23}; //DO NOT forget the resistors
 
 void blink (const int led){ 
     digitalWrite(led, HIGH); 
@@ -13,7 +13,7 @@ void blink (const int led){
 } 
 
 void light_leds(void){  
-    for (int i; i < sizeof(leds); i++) { 
+    for (int i; i < 4; i++) { 
         pinMode(leds[i],OUTPUT); 
         delay(1); 
     } 
