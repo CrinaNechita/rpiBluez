@@ -16,6 +16,16 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -Wno-unused-function -
 include(FindPkgConfig)
 pkg_check_modules(GLIB glib-2.0 gio-2.0 REQUIRED)
 include_directories(${GLIB_INCLUDE_DIRS})
+find_library(WIRINGPi_LIBRARIES wiringPi PATHS /usr/local/lib /usr/lib)
+find_path(WIRINGPi_INCLUDES wiringPi.h PATHS /usr/local/include /usr/include)
+
+if(NOT WIRINGPi_LIBRARIES)
+    message(FATAL_ERROR "wiringPi library not found. Install it first.")
+endif()
+
+if(NOT WIRINGPi_INCLUDES)
+    message(FATAL_ERROR "wiringPi headers not found. Install it first.")
+endif()
 include_directories(${WIRINGPi_INCLUDES})
 
 add_subdirectory(binc)
