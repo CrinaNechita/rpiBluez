@@ -4,6 +4,7 @@ add_library(Binc
         advertisement.c
         agent.c
         application.c
+        announce.c
         characteristic.c
         descriptor.c
         device.c
@@ -21,6 +22,7 @@ set(PUBLIC_HEADERS
     advertisement.h
     agent.h
     application.h
+    announce.h
     characteristic.h
     descriptor.h
     device.h

@@ -11,7 +11,7 @@ Assuming you have a default installation, you will need to install CMake and GLi
 sudo apt install -y cmake
 sudo apt install -y libglib2.0-dev
 ```
-
+Follow the instructions on https://github.com/WiringPi/WiringPi to install WiringPi
 ## Pinout
 DO NOT forget the resistors
 
