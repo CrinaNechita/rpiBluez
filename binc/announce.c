@@ -44,7 +44,8 @@ void start_buzzer(void){
 	delay(1000);
     pinMode(BUZZER_PIN,PWM_OUTPUT);
 	pwmSetRange(1024);
-    pwmWrite(BUZZER_PIN, 500); 
+	pwmSetClock(4);
+    pwmWrite(BUZZER_PIN, 700); 
 	log_debug(TAG, "Can you hear me?");
 }
 
