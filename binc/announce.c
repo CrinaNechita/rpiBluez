@@ -4,6 +4,7 @@
 
 static const char *const TAG = "Announce";
 const int leds[4] = {11,13,15}; 
+int scale [8] = { 262, 294, 330, 349, 392, 440, 494, 525 } ;
 
 void start_actuator(void){
     log_debug(TAG, "Wait a second...");
@@ -20,9 +21,9 @@ void start_actuator(void){
 
 void blink(int led){ 
     digitalWrite(led, HIGH); 
-    delay(1000); 
+    delay(300); 
     digitalWrite(led, LOW); 
-    delay(1000);
+    delay(100);
 } 
 
 void light_leds(void){  
@@ -42,16 +43,18 @@ void light_leds(void){
 void start_buzzer(void){
 	log_debug(TAG, "Buzzer on...");
 	delay(1000);
-    pinMode(BUZZER_PIN,PWM_OUTPUT);
-	pwmSetRange(1024);
-	pwmSetClock(9);
-    pwmWrite(BUZZER_PIN, 500); 
-	log_debug(TAG, "Can you hear me?");
-	delay(3000);
-	pwmWrite(BUZZER_PIN, 0); 
+	softToneCreate (BUZZER_PIN) ;
+
+    for (i = 0 ; i < 8 ; ++i)
+    {
+      log_debug(TAG, "i=",i);
+      softToneWrite (BUZZER_PIN, scale [i]) ;
+      delay (500) ;
+    }
+	softToneWrite(BUZZER_PIN, 0);
 }
 
 void stop_alarm(void){
-    pwmWrite(BUZZER_PIN, 0);     
+    softToneWrite(BUZZER_PIN, 0);     
 	log_debug(TAG, "Shutting up...");
 }
