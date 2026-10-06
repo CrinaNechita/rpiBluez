@@ -13,6 +13,7 @@ void blink(int led){
 } 
 
 void light_leds(void){  
+	log_debug(TAG, "Lights on...");
     for (int i = 0; i < 3; i++) { 
         pinMode(leds[i],OUTPUT); 
         delay(1); 
@@ -31,12 +32,10 @@ void start_buzzer(void){
     pinMode(BUZZER_PIN,PWM_OUTPUT);
 	pwmSetRange(1024);
     pwmWrite(BUZZER_PIN, 500); 
+	log_debug(TAG, "Can you hear me?");
 }
 
 void stop_alarm(void){
-    for (int i = 0; i < 3; i++) { 
-        digitalWrite(leds[i], LOW);
-    }
     pwmWrite(BUZZER_PIN, 0);     
 	log_debug(TAG, "Shutting up...");
 }
