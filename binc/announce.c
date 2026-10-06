@@ -3,7 +3,7 @@
 #include <wiringPi.h> 
 
 static const char *const TAG = "Announce";
-const int leds[4] = {11,13,15,16}; 
+const int leds[4] = {11,13,15}; 
 
 void blink(int led){ 
     digitalWrite(led, HIGH); 
@@ -13,13 +13,13 @@ void blink(int led){
 } 
 
 void light_leds(void){  
-    for (int i = 0; i < 4; i++) { 
+    for (int i = 0; i < 3; i++) { 
         pinMode(leds[i],OUTPUT); 
         delay(1); 
     } 
     
     for (int i = 0; i < REPEAT_COUNT + 1; i++) { 
-        for (int j = 0; j < 4; j++) { 
+        for (int j = 0; j < 3; j++) { 
             blink(leds[j]); 
         } 
     } 
@@ -31,7 +31,7 @@ void start_buzzer(void){
 }
 
 void stop_alarm(void){
-    for (int i = 0; i < 4; i++) { 
+    for (int i = 0; i < 3; i++) { 
         digitalWrite(leds[i], LOW);
     }
     pwmWrite(BUZZER_PIN, 0);     

@@ -20,7 +20,6 @@ DO NOT forget the resistors
 | LED 1  | 17   | 11           |
 | LED 2  | 27   | 13           |
 | LED 3  | 22   | 15           |
-| LED 4  | 23   | 16           |
 | Buzzer | 18   | 12           |
 
 ## Building and running the code
