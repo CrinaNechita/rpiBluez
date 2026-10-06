@@ -10,7 +10,7 @@ void start_actuator(void){
 	delay(1000);
 	log_debug(TAG, "Starting to make noise...");
     if (wiringPiSetupPhys() == -1) {
-        fprintf(stderr, "Failed to initialize WiringPi\n");
+        log_error(TAG, "Failed to initialise wiringpi");
     }
     start_buzzer();
     light_leds();
