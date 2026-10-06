@@ -3,9 +3,9 @@
 #include <wiringPi.h> 
 
 static const char *const TAG = "Announce";
-const int leds[4] = {17,27,22,23}; //DO NOT forget the resistors
+const int leds[4] = {11,13,15,16}; 
 
-void blink (int led){ 
+void blink(int led){ 
     digitalWrite(led, HIGH); 
     delay(30); 
     digitalWrite(led, LOW); 
@@ -27,19 +27,19 @@ void light_leds(void){
 
 void start_buzzer(void){
     pinMode(BUZZER_PIN,PWM_OUTPUT);
-    tone(BUZZER_PIN, 440, 500); 
+    pwmWrite(BUZZER_PIN, 500); 
 }
 
 void stop_alarm(void){
     for (int i; i < 4; i++) { 
         digitalWrite(led, LOW);
     }
-    tone(BUZZER_PIN, 0, 0);    
+    pwmWrite(BUZZER_PIN, 0);     
 }
 
 void start_actuator(void){
     log_debug(TAG, "Starting to make noise...");
-    wiringPiSetupGpio();
+    wiringPiSetupPhys();
     start_buzzer();
     light_leds();
     stop_alarm();
