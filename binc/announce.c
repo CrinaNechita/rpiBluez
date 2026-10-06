@@ -13,12 +13,12 @@ void blink(int led){
 } 
 
 void light_leds(void){  
-    for (int i; i < 4; i++) { 
+    for (int i = 0; i < 4; i++) { 
         pinMode(leds[i],OUTPUT); 
         delay(1); 
     } 
     
-    for (int i; i < REPEAT_COUNT + 1; i++) { 
+    for (int i = 0; i < REPEAT_COUNT + 1; i++) { 
         for (int j = 0; j < 4; j++) { 
             blink(leds[j]); 
         } 
@@ -31,7 +31,7 @@ void start_buzzer(void){
 }
 
 void stop_alarm(void){
-    for (int i; i < 4; i++) { 
+    for (int i = 0; i < 4; i++) { 
         digitalWrite(leds[i], LOW);
     }
     pwmWrite(BUZZER_PIN, 0);     
