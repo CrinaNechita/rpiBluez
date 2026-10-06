@@ -62,7 +62,7 @@ const char *on_local_char_write(const Application *application, const char *addr
                           const char *char_uuid, GByteArray *byteArray, const guint16 mtu, const guint16 offset) {
     GString *result = g_byte_array_as_hex(byteArray);
     log_debug(TAG, "Starting the actuator part.... ");
-    start_actuator();
+    //start_actuator();
     log_debug(TAG, "write request characteristic <%s> with value <%s>", char_uuid, result->str);
     g_string_free(result, TRUE);
 
@@ -104,6 +104,11 @@ static void cleanup_handler(int signo) {
 
 int main(void) {
     
+
+	log_debug(TAG, "Starting the actuator part.... ");
+    start_actuator();
+
+
     GDBusConnection *dbusConnection = g_bus_get_sync(G_BUS_TYPE_SYSTEM, NULL, NULL);
     if (signal(SIGINT, cleanup_handler) == SIG_ERR)
         log_error(TAG, "can't catch SIGINT");
