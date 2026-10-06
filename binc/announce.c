@@ -5,11 +5,8 @@
 
 static const char *const TAG = "Announce";
 const int leds[4] = {11,13,15}; 
-int scale [8] = { 262, 294, 330, 349, 392, 440, 494, 525 } ;
 
 void start_actuator(void){
-    log_debug(TAG, "Wait a second...");
-	delay(1000);
 	log_debug(TAG, "Starting to make noise...");
     if (wiringPiSetupPhys() == -1) {
         log_error(TAG, "Failed to initialise wiringpi");
@@ -28,7 +25,6 @@ void blink(int led){
 } 
 
 void light_leds(void){  
-	log_debug(TAG, "Lights on...");
     for (int i = 0; i < 3; i++) { 
         pinMode(leds[i],OUTPUT); 
 		digitalWrite(leds[i], LOW);
@@ -42,17 +38,9 @@ void light_leds(void){
 }
 
 void start_buzzer(void){
-	log_debug(TAG, "Buzzer on...");
 	delay(1000);
 	softToneCreate (BUZZER_PIN) ;
-
-    for (int i = 0 ; i < 8 ; ++i)
-    {
-      log_debug(TAG, "i=",i);
-      softToneWrite (BUZZER_PIN, scale [i]) ;
-      delay (500) ;
-    }
-	softToneWrite(BUZZER_PIN, 0);
+    softToneWrite (BUZZER_PIN, 450) ;
 }
 
 void stop_alarm(void){
