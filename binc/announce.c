@@ -5,6 +5,19 @@
 static const char *const TAG = "Announce";
 const int leds[4] = {11,13,15}; 
 
+void start_actuator(void){
+    log_debug(TAG, "Wait a second...");
+	delay(1000);
+	log_debug(TAG, "Starting to make noise...");
+    if (wiringPiSetupPhys() == -1) {
+        fprintf(stderr, "Failed to initialize WiringPi\n");
+    }
+    start_buzzer();
+    light_leds();
+    stop_alarm();
+    log_debug(TAG, "stopping...");
+}
+
 void blink(int led){ 
     digitalWrite(led, HIGH); 
     delay(1000); 
@@ -16,7 +29,7 @@ void light_leds(void){
 	log_debug(TAG, "Lights on...");
     for (int i = 0; i < 3; i++) { 
         pinMode(leds[i],OUTPUT); 
-        delay(1); 
+		digitalWrite(leds[i], LOW);
     } 
     
     for (int i = 0; i < REPEAT_COUNT + 1; i++) { 
@@ -38,14 +51,4 @@ void start_buzzer(void){
 void stop_alarm(void){
     pwmWrite(BUZZER_PIN, 0);     
 	log_debug(TAG, "Shutting up...");
-}
-
-void start_actuator(void){
-    log_debug(TAG, "Starting to make noise...");
-	delay(100);
-    wiringPiSetupPhys();
-    start_buzzer();
-    light_leds();
-    stop_alarm();
-    log_debug(TAG, "stopping...");
 }
