@@ -7,9 +7,9 @@ const int leds[4] = {11,13,15};
 
 void blink(int led){ 
     digitalWrite(led, HIGH); 
-    delay(100); 
+    delay(1000); 
     digitalWrite(led, LOW); 
-    delay(100);
+    delay(1000);
 } 
 
 void light_leds(void){  
@@ -27,8 +27,9 @@ void light_leds(void){
 
 void start_buzzer(void){
 	log_debug(TAG, "Buzzer on...");
-	delay(100);
+	delay(1000);
     pinMode(BUZZER_PIN,PWM_OUTPUT);
+	pwmSetRange(1024);
     pwmWrite(BUZZER_PIN, 500); 
 }
 
@@ -37,6 +38,7 @@ void stop_alarm(void){
         digitalWrite(leds[i], LOW);
     }
     pwmWrite(BUZZER_PIN, 0);     
+	log_debug(TAG, "Shutting up...");
 }
 
 void start_actuator(void){

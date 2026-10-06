@@ -5,7 +5,7 @@
 #include <wiringPi.h> 
 
 #define REPEAT_COUNT 7
-#define BUZZER_PIN 12
+#define BUZZER_PIN 32
 
 void blink (const int led);
 
