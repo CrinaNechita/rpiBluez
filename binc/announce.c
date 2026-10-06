@@ -32,7 +32,7 @@ void start_buzzer(void){
 
 void stop_alarm(void){
     for (int i; i < 4; i++) { 
-        digitalWrite(led[i], LOW);
+        digitalWrite(leds[i], LOW);
     }
     pwmWrite(BUZZER_PIN, 0);     
 }
