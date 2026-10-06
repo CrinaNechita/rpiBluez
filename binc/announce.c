@@ -1,6 +1,7 @@
 ﻿#include "announce.h"
 #include "logger.h"
 #include <wiringPi.h> 
+#include <softTone.h>
 
 static const char *const TAG = "Announce";
 const int leds[4] = {11,13,15}; 
@@ -45,7 +46,7 @@ void start_buzzer(void){
 	delay(1000);
 	softToneCreate (BUZZER_PIN) ;
 
-    for (i = 0 ; i < 8 ; ++i)
+    for (int i = 0 ; i < 8 ; ++i)
     {
       log_debug(TAG, "i=",i);
       softToneWrite (BUZZER_PIN, scale [i]) ;
